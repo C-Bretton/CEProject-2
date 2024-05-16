@@ -245,7 +245,7 @@ class Cep2Zigbee2mqttClient:
 
         # Set connected flag to true. This is later used if multiple calls to connect are made. This
         # way the user does not need to very if the client is connected.
-        self.__connected = True
+        self.__connected = True 
         print("MQTT client connected")
 
     def __on_disconnect(self, client, userdata, rc) -> None:
