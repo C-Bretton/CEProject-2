@@ -2,7 +2,7 @@ from enum import Enum
 
 class Z2M_MessageType(Enum):
     """
-    Defines message types, and the different types of messages we can have.
+        Defines message types, and the different types of messages we can have.
     """
     
     BRIDGE_EVENT = "bridge_event"

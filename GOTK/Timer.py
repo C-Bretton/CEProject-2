@@ -4,124 +4,94 @@ from threading import Thread, Event
 class Timer:
     def __init__(self):
         """
-            Creates a timer class.
-            The notify threshold is set to 15 minutes after the current time.
-            The time limit is set to 20 minutes after the current time.
-
-            To start the timer, use the start() fucntion.
+            Creates a Timer class.
+            The Timer Class includes multiple thresholds
+            
+            For the Away Timer these are:
+            The Notify threshold is set to 15 minutes after the start time
+            The Limit Threshold is set to 20 minutes after the start time.
+            The Upper Threshold is set to 60 minutes after the start time.
+            
+            The Actuator Timer has one threshold, Power Threshold is set to 30 seconds.
         """
-        # Timer values
-        self.notify_period = 30  #15 * 60
-        self.time_limit_period = 60  #20 * 60
-        self.super_time_limit_period = 120  #60 * 60 #!
-        self.power_timer = 30 # 60 
-
-        # Timer variables, set to -1 to indicate that the timer is not running.
-        self.start_time = -1
-        self.notify_threshold = -1
-        self.time_limit = -1
-        self.super_time_limit = -1
-        self.timer_active = False
         
-        # Thread for checking the timer
-        #self.thread = Thread(target = self.check_timer(), daemon = True)
+        #Threshold Periods for Away Timer
+        self.Notify_Period = 15 #15 * 60 for 15 minutes
+        self.Limit_Period = 20 #20 * 60 for 20 minutes
+        self.Upper_Period = 60  #60 * 60 for 60 minutes
+        #! Test values underneath 
+        # self.Notify_Period = 5 
+        # self.Limit_Period = 7 
+        # self.Upper_Period = 10  
+        
+        #Threshold Value for Actuator Timer
+        self.Actuator_Period = 30 
 
-    def time_now(self):
+        # Timer variables initialised to -1 to indicate that the timer is not running.
+        self.Start_Time = -1
+        self.Notify_Threshold = -1
+        self.Limit_Threshold = -1
+        self.Upper_Threshold = -1
+        self.Actuator_Threshold = -1
+        self.Timer_Active = False
+
+    def Time_Now(self):
+        """
+            Returns the current time as an integer
+        """
 
         return int(time.time())
 
-    def start(self):
+    def Start(self):
         """
-            Creates an "away-from_kitchen"-timer from the current time.
-            Starts the thread that checks the timer.
+            Start Timer:
+            Assign Start_Time as the current time and updates the different thresholds,
+            using the Start_Time and the Threshold Periods, and set Timer_Active as true.
         """
 
-        self.start_time = int(time.time())
-        self.notify_threshold = self.start_time + self.notify_period
-        self.time_limit = self.start_time + self.time_limit_period
-        self.super_time_limit = self.start_time + self.super_time_limit_period
-        
-        self.timer_active = True
+        self.Start_Time = self.Time_Now()
+        self.Notify_Threshold = self.Start_Time + self.Notify_Period
+        self.Limit_Threshold = self.Start_Time + self.Limit_Period
+        self.Upper_Threshold = self.Start_Time + self.Upper_Period
+        self.Actuator_Threshold = self.Start_Time + self.Actuator_Period
+        self.Timer_Active = True
    
-
-    def reset(self):
+    def Time_Passed(self):
+        """ Returns time since the timer was started 
         """
-            Resets the timer by setting values to -1.
-        """
-        self.start_time = -1
-        self.notify_threshold = -1
-        self.time_limit = -1
-        self.super_time_limit = -1
-        self.timer_active = False
-
-
-    #Cant the two following methods be merged into one????
-
-    def notify(self) -> bool:
-        """
-            Call this function to check if the notification threshold has been reached.
-            If so, it does "something"
-        """
-
-        if(int(time.time()) >= self.notify_threshold) and (self.notify_threshold != -1):
-            # send signal to blink lamp
-            print("these are the notify times: ", int(time.time()), self.notify_threshold)
-            return True
-        else:
-            return False
-
-    def limit_exceeded(self) -> bool:
-        """
-            Call this function to check if the time limit has been exceeded.
-            If so, it does "something".
-        """
-        if(int(time.time()) >= self.time_limit) and (self.time_limit != -1):
-            # send signal to turn off stove
-            print("these are the limit_exceeded times: ", int(time.time()), self.time_limit)
-            return True
-        else:
-            return False
-    
-    def super_limit(self) -> bool:
-        """
-            Call this function to check if the super time limit has been exceeded.
-            If so, it does "something".
-        """
-        if(int(time.time()) >= self.super_time_limit) and (self.super_time_limit != -1):
-            # send signal to turn off stove
-            print("The super limit times: ", int(time.time()), self.super_time_limit)
-            return True
-        else:
-            return False
-    
-    
-    def stop(self):
-        """
-            Stops the timer when time limit is exceeded.
-            Resets the timer and makes the thread stop checking the timer.
-        """
-        self.reset()
-        self.timer_active = False
-
-
-    def check_timer(self):
-        """
-            Checks the timer every ???. return values 0, nothing, 1 notify, 2 limit exceeded
-        """
-        #this loops runs forever and doesnt run client concurrently
-        # while True:
+        return self.Time_Now() - self.Start_Time
         
-        if self.super_limit():
-            print("Upper Limit exceeded")
-            self.stop()
+    def Stop(self):
+        """
+            Stops and resets the timer by setting values to -1 and set Timer_Active to False.
+        """
+        self.Start_Time = -1
+        self.Notify_Threshold = -1
+        self.Limit_Threshold = -1
+        self.Upper_Threshold = -1
+        self.Actuator_Threshold = -1
+        self.Timer_Active = False
+
+    def Check_Timer(self):
+        """
+            Checks the timer:
+            Returns a timer state corresponding to the latest threshold that is exceeded. If no threshold is exceeded the timer state it "On" 
+        """
+        
+        #Upper Threshold
+        if(self.Time_Now() >= self.Upper_Threshold) and (self.Upper_Threshold != -1):
+            # print("Upper Threshold exceeded", "\nCurrent time: ", self.Time_Now(), "\nUpper Threshold", self.Upper_Threshold)
             return "Upper"
         
-        elif(self.limit_exceeded()):
-            print("Limit exceeded")
+        #Limit Threshold
+        elif(self.Time_Now() >= self.Limit_Threshold) and (self.Limit_Threshold != -1):
+            # print("Limit Threshold exceeded", "\nCurrent time: ", self.Time_Now(), "\nLimit Threshold", self.Limit_Threshold)
             return "Limit"
         
-        elif(self.notify()):
-            print("bruh notify")
+        #Notify Threshold
+        elif(self.Time_Now() >= self.Notify_Threshold) and (self.Notify_Threshold != -1): 
+            # print("Notify Threshold exceeded", "\nCurrent time: ", self.Time_Now(), "\nNotify Threshold", self.Notify_Threshold)
             return "Notify"
         
-        return "Normal"
+        return "On"
+
