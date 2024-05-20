@@ -21,8 +21,7 @@ class LogicController:
     #Initializes the controller
     def __init__(self, device_model: DeviceModel) -> None:
         """
-        Write something good here #! Do this!!!
-        
+            Write something good here #! Do this!!!
         """
         self.__device_model = device_model
         self.__z2m_client = Z2M_Client(host = self.MQTT_BROKER_HOST,

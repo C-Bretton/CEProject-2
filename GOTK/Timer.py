@@ -19,10 +19,6 @@ class Timer:
         self.Notify_Period = 15 #15 * 60 for 15 minutes
         self.Limit_Period = 20 #20 * 60 for 20 minutes
         self.Upper_Period = 60  #60 * 60 for 60 minutes
-        #! Test values underneath 
-        # self.Notify_Period = 5 
-        # self.Limit_Period = 7 
-        # self.Upper_Period = 10  
         
         #Threshold Value for Actuator Timer
         self.Actuator_Period = 30 
