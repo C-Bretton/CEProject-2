@@ -29,7 +29,8 @@ class LogicController:
     #Initializes the controller
     def __init__(self, device_model: DeviceModel) -> None:
         """
-            Write something good here #! Do this!!!
+            On Initialization it assigns the device_model, initializes the Z2M Client, initializes the logger and timer objects, and initializes 
+            multiple dictionaries.
         """
         self.__device_model = device_model
         self.__z2m_client = Z2M_Client(host = self.MQTT_BROKER_HOST,
