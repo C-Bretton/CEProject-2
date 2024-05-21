@@ -11,7 +11,15 @@ from Z2M_MessageType import Z2M_MessageType
 class LogicController:
     """
     The logic controller is the main driver for the GOTK system. When the stove is active it listens to the messages from the 
-    devices and holds the logic that actuates based on the messages received from the Z2M_Client.
+    devices and holds the logic that actuates based on the messages received from the Z2M_Client. It utilizes two threads to concurrently
+    run timers with the Logic Controller. When the Away Timer thread reaches a threshold, it signals the Z2M Client to change the lights or actuator state based on 
+    depedending on the threshold. The Actuator thread is used to check if the citizen switches of the stove. 
+    
+    The Logic Controller logs when specific events happen.
+    
+    When either the Away Timer Thread exceeds the Upper Threshold or the Actuator Thread detects that the citizen turns off the stove,
+    the logic controllers Go_Idle() method is called, which closes the threads, disconnects the Z2M Client and stops 
+    the Logic Controller, and goes back into idle mode.
     """
 
     HTTP_HOST = "http://localhost:8000"
@@ -42,8 +50,10 @@ class LogicController:
         
     def Start(self) -> None:
         """
-        When the Controller is started, it connects to the Z2M-Client listening to the zigbee2mqtt messages. It 
+        When the Controller is started, it connects to the Z2M-Client listening to the zigbee2mqtt messages. It assigns all relevant variables,
+        as well as initializing the two threads, which is started right after.
         """
+        
         print("System started")
         self.__z2m_client.connect()
         
@@ -71,7 +81,8 @@ class LogicController:
     #Function to switch into idle mode
     def Go_Idle(self) -> None:
         """
-        Stops listening to zigbee2mqtt messages, and stops the loop for the controller client. #!Controller mode?
+        Stops listening to zigbee2mqtt messages, terminates the threads and stops the loop for the controller client. 
+        When the controller loop stops, idle mode is entered.
         """
         print("Go Idle is called")
         #Make sure clocks are stopped and threads are stopped by setting their running flags to false. 
@@ -169,7 +180,7 @@ class LogicController:
                     self.Go_Idle()
 
                     
-                #If Power has been registered after actuator is turned on and power is 0. Then Citizen must have turned off the stove - go idle
+                #If a previous Power was registered while actuator has been on and power is 0. Then Citizen must have turned off the stove - go idle
                 elif self.actuator_dict["State"] == "ON" and self.actuator_dict["Power"] == 0 and self.actuator_dict["PowerWasRegistered"] == True:
                     self.System_Logger.logStoveOff()
                     print("Citizen turned off the stove - before 30 sec")
@@ -204,8 +215,14 @@ class LogicController:
         """
         The Event Received in shape of a message. The Logic Controller handles the messages differently depending on the device type.
 
-        Actuator Messages:  Saves the values received from actuator in the actuator dictionary
-        Sensor Messages: #! #! DO THIS 
+        Actuator Messages:  Saves the values received from actuator in the Actuator dictionary
+        Sensor Messages: Uses the occupancy from the sensor messages to assign which rooms has occupancy. Depending on the room occupancy 
+        and different states, the method checks whether the citizen is in the kitchen and not.
+        
+        When citizen enters kitchen, the system logs it, ensures all lights are off and turns on the actuator, if it was switched off.
+        When citizen leaves kitchen, the system logs it, starts the away timer thread, which sends signals to control the lights in the rooms 
+        with occupancy. While kitchen is not occupied, it keeps updating which rooms detects occupancy such that the lights follow the citizen.
+        
         """
         #Splits the topic string
         tokens = message.topic.split("/")

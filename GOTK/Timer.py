@@ -38,6 +38,11 @@ class Timer:
 
         return int(time.time())
 
+    def Time_Passed(self):
+        """ Returns time since the timer was started 
+        """
+        return self.Time_Now() - self.Start_Time
+
     def Start(self):
         """
             Start Timer:
@@ -51,11 +56,6 @@ class Timer:
         self.Upper_Threshold = self.Start_Time + self.Upper_Period
         self.Actuator_Threshold = self.Start_Time + self.Actuator_Period
         self.Timer_Active = True
-   
-    def Time_Passed(self):
-        """ Returns time since the timer was started 
-        """
-        return self.Time_Now() - self.Start_Time
         
     def Stop(self):
         """
