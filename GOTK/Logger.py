@@ -15,7 +15,6 @@ class Logger:
         """
         self.url = url
 
-    #!This is the real logger
     def send_log(self, timeStamp: int, eventType: HeucodEventType):
         """
             Creates a log of an event.
@@ -43,12 +42,7 @@ class Logger:
         except Exception as error:
             # If something goes wrong, mainly no connection, raise the error.
             raise error
-    
-    #Everything above is the real send Log - only uncommmented for testing implementation without sending to log
-    
-    #!This is non logging log, to test system.
-    # def send_log(self, timeStamp: int, eventType: HeucodEventType): 
-    #     print("has logged")
+
 
     def logStoveOn(self):
         self.send_log(timeStamp = int(time.time()), eventType=HeucodEventType.StoveTurnsOn)
