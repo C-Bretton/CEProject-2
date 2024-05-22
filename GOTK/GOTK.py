@@ -33,7 +33,7 @@ def on_message(client, userdata, msg):
     elif "power" in payload and payload["power"] >= 6 and client.kitchen_movement == True:
         print("Stove has been turned on! Closing idle mode")
         client.disconnect()
-        
+        controller.System_Logger.logStoveOn()
         #Assigns the received actuator values to the Actuator Dictionary, containing last detected actuator values.
         controller.actuator_dict["State"] = payload["state"]
         controller.actuator_dict["Power"] = payload["power"] 
