@@ -1,9 +1,12 @@
+import sys
 import time
 from LogicController import LogicController
 from DeviceModel import DeviceModel, ZigbeeDevice
 import json
 import paho.mqtt.client as mqtt
 from Logger import Logger
+
+
 
 #Initializes and starts the logic controller which handles the logic when the stove is on
 def start_controller():
@@ -58,6 +61,8 @@ def idle():
 
 #Main Initializing device model and starts idle mode
 if __name__ == "__main__":
+    #Server Host Address given as argument when running the python script
+    ServerHost = sys.argv[1]
     
     device_model = DeviceModel()
     device_model.add([ZigbeeDevice("Sensor 0", "pir"),
@@ -70,41 +75,11 @@ if __name__ == "__main__":
                       ZigbeeDevice("Bulb 3", "light"),
                       ZigbeeDevice("Bulb 4", "light"),
                       ZigbeeDevice("Actuator", "power plug")])
-    controller = LogicController(device_model=device_model)
+    controller = LogicController(device_model=device_model, ServerHost=ServerHost)
     
     print("------------- SYSTEM ACTIVATED --------------")
 
     idle()
     
     #System should keep running going between the idle and controller mode
-
-    
-    
-
-
-
-
-
-
-
-
-
-
-# def on_message(client: mqtt.Client, userdata, msg):
-#     payload = msg.payload
-#     payload = json.loads(payload.decode('utf-8'))    
-#     if payload["power"] > 10:
-#         system_on = True
-#         client.disconnect()
-
-    #while True:
-
-        #client = mqtt.Client()
-        #client.on_message = on_message
-        #client.connect("localhost", 1883)
-        #client.subscribe("zigbee2mqtt/Actuator")
-        #client.loop_start()
-
-        #while client:
-            #print("Stove is off")
 

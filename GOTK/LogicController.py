@@ -27,7 +27,7 @@ class LogicController:
     MQTT_BROKER_PORT = 1883
 
     #Initializes the controller
-    def __init__(self, device_model: DeviceModel) -> None:
+    def __init__(self, device_model: DeviceModel, ServerHost: str) -> None:
         """
             On Initialization it assigns the device_model, initializes the Z2M Client, initializes the logger and timer objects, and initializes 
             multiple dictionaries.
@@ -38,7 +38,7 @@ class LogicController:
                                        on_message_callback=self.__zigbee2mqtt_event_received)
         
         #Initialise Logger and Timers
-        self.System_Logger = Logger()
+        self.System_Logger = Logger(ServerHost=ServerHost)
         self.__clock_away = Timer()
         self.__clock_actuator = Timer()
         
