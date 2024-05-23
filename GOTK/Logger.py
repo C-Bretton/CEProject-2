@@ -15,38 +15,38 @@ class Logger:
         """
         self.url = f"http://{ServerHost}/writeToDB/"
 
-    # def send_log(self, timeStamp: int, eventType: HeucodEventType):
-    #     """
-    #         Creates a log of an event.
+    def send_log(self, timeStamp: int, eventType: HeucodEventType):
+        """
+            Creates a log of an event.
 
-    #         timeStamp: Given as an integer of seconds since 1. january 1930 00:00:00. (time.time())
+            timeStamp: Given as an integer of seconds since 1. january 1930 00:00:00. (time.time())
 
-    #         eventType: A string describing the event type.
+            eventType: A string describing the event type.
 
-    #         Event types could be: 
-    #         "..." to be continued...
-    #     """
+            Event types could be: 
+            "..." to be continued...
+        """
 
-    #     data : HeucodEvent = HeucodEvent()
+        data : HeucodEvent = HeucodEvent()
 
-    #     data.event_type = eventType
+        data.event_type = eventType
 
-    #     data.timestamp = timeStamp
+        data.timestamp = timeStamp
         
-    #     #! Tilføj evt patient_id 
-    #     try:
-    #         # Creates a post request for the HTTP-server.
-    #         # Redirects are not allowed, since this causes the post request to be turnt into a get request.
-    #         jsonData = json.loads(data.to_json()) #! The to_json() function creates a str containing a json, we just want the dictionary of the json. Thus we use json.loads()
-    #         response = requests.post(self.url, json=jsonData, allow_redirects=False)
-    #     except Exception as error:
-    #         # If something goes wrong, mainly no connection, raise the error.
-    #         raise error
+        #! Tilføj evt patient_id 
+        try:
+            # Creates a post request for the HTTP-server.
+            # Redirects are not allowed, since this causes the post request to be turnt into a get request.
+            jsonData = json.loads(data.to_json()) #! The to_json() function creates a str containing a json, we just want the dictionary of the json. Thus we use json.loads()
+            response = requests.post(self.url, json=jsonData, allow_redirects=False)
+        except Exception as error:
+            # If something goes wrong, mainly no connection, raise the error.
+            raise error
 
-    #!This is non logging log, to test system.
-    def send_log(self, timeStamp: int, eventType: HeucodEventType): 
-        print("\n -------------- this is server host!!!! ---------------- \n\n ", self.url,"\n Type is:", type(self.url), "\n\n")
-        print("has logged")
+    #!This is test logger, when server is not running.
+    # def send_log(self, timeStamp: int, eventType: HeucodEventType): 
+    #     print("\n -------------- this is test server host!!!! ---------------- \n\n ", self.url,"\n Type is:", type(self.url), "\n\n")
+    #     print("has logged")
 
     def logStoveOn(self):
         self.send_log(timeStamp = int(time.time()), eventType=HeucodEventType.StoveTurnsOn)
