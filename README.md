@@ -2,7 +2,7 @@
 <div align="center">
 
 <a href="#readme">
-  <img src=".github/banner.png" alt="StockScript" width="500" height="400">
+  <img src=".github/banner.png" alt="StockScript" width="500" height="500">
 </a>
 
 <br/>
@@ -13,13 +13,10 @@
 
 </div>
 
-<br/>
 
 # **Introduction**
 Kitchen Guard, developed by The Guardians of the Kitchen (Group 2), is a system designed to enhance kitchen safety by monitoring stove activity and notifying users if the stove is left unattended. The system utilizes a Raspberry Pi 5, motion sensors, contact sensors, and smart lighting to detect user presence and stove status. If the stove is left on for an extended period without user activity, the system sends notifications through blinking lights and can automatically turn off the stove to prevent accidents.
 
-
-<br/>
 
 # **Table of contents**
 
@@ -33,7 +30,6 @@ Kitchen Guard, developed by The Guardians of the Kitchen (Group 2), is a system 
 * [License](LICENSE)
 * [Support](#support)
 
-<br/>
 
 # **Features**
 
@@ -44,8 +40,6 @@ The Kitchen Guard system offers several key features to ensure user safety and c
 * Automatically turns off the stove after 20 minutes away from kitchen.
 * Uses smart lighting for visual alerts in all rooms.
 * Uses Zigbee communication for reliable sensor interaction.
-
-<br/>
 
 
 # **Hardware Components**
@@ -58,16 +52,12 @@ The system is built using the following hardware components:
 * **LED1836G9 Ikea TRÅDFRI**: Provides visual alerts through smart lighting.
 * **ZBDongle-P Sonoff Zigbee 3.0 USB Dongle Plus**: Enables communication between the Raspberry Pi and Zigbee devices.
 
-<br/>
-
 
 # **Architecture Overview**
 
 The system follows a model-view-controller architecture, integrating various hardware components with the control logic running on the Raspberry Pi. Zigbee2MQTT is used for communication between the devices, ensuring stable and efficient operation.
 
 For more information, refer to the Architectural Design Specification.
-
-<br/>
 
 
 # **Testing Strategy**
@@ -76,14 +66,11 @@ The testing process includes unit tests, integration tests, and acceptance tests
 
 For more information, refer to the Test Specification Document.
 
-<br/>
-
 
 # **GOTK PHP Server**
 
 The Kitchen Guard system also relies on a PHP-based server for database interactions. You can find the source code and setup instructions for the PHP server in the [GOTKPHPServer Repository](https://github.com/Losmobilos3/GOTKPHPServer).
 
-<br/>
 
 # **Support**
 
