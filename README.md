@@ -77,11 +77,3 @@ The Kitchen Guard system also relies on a PHP-based server for database interact
 For any questions or support, please open an issue on GitHub or contact us directly. 
 
 Project Manager: Daniel Østerballe, 202205835@post.au.dk
-
-
-
-### Are you feeling generous? Consider
-
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley)
-
-<br/>

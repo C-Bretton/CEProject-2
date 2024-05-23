@@ -45,7 +45,7 @@ pip3 install -r requirements.txt
 
 ## **Configuration**
 
-1. Configure the Zigbee2MQTT to recognize the connected devices.
+1. Pair all needed devices with Zigbee2MQTT.
 
 2. Inside `GOTK.py`, update the list of devices to match your hardware setup.
 
@@ -55,15 +55,14 @@ pip3 install -r requirements.txt
 
 Once the installation is complete, follow these steps to run the Kitchen Guard system:
 
-1. Open up two different terminals. In the first terminal, navigate to your Zigbee2MQTT folder and start it by the command:
+1. Open up two different terminals. In the first terminal, navigate to your Zigbee2MQTT folder and start it with the command:
 ```bash
 npm start
 ```
 
-2. In the second terminal, navigate to the repository and run the Kitchen Guard system:
+2. Start up the PHP server. Please refer to [GOTKPHPServer Repository](https://github.com/Losmobilos3/GOTKPHPServer).
+
+3. In the second terminal, navigate to the repository and run the Kitchen Guard system:
 ```bash
 python3 GOTK/GOTK.py
 ```
-
-3. Start up the PHP server. Please refer to [GOTKPHPServer Repository](https://github.com/Losmobilos3/GOTKPHPServer).
-
