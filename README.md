@@ -9,8 +9,7 @@
 
 [![license](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=for-the-badge)](LICENSE "License")
 [![Version](https://img.shields.io/badge/version-v1.0-yellow.svg?style=for-the-badge)](#readme "Version")
-[![install](https://img.shields.io/badge/install-Readme-salmon.svg?style=for-the-badge)](LICENSE "License")
-[![install](https://img.shields.io/badge/run-Readme-salmon.svg?style=for-the-badge)](LICENSE "License")
+[![install](https://img.shields.io/badge/Installations-Guide-salmon.svg?style=for-the-badge)](INSTALL.md "Installation Guide")
 
 </div>
 
@@ -28,9 +27,9 @@ Kitchen Guard, developed by The Guardians of the Kitchen (Group 2), is a system 
 * [Features](#features)
 * [Hardware Components](#hardware-components)
 * [Installation Guide](INSTALL.md)
-* [Running the System](RUN.md)
 * [Architecture Overview](#architecture-overview)
 * [Testing Strategy](#testing-strategy)
+* [GOTK PHP Server](#gotk-php-server)
 * [License](LICENSE)
 * [Support](#support)
 
@@ -79,6 +78,12 @@ For more information, refer to the Test Specification Document.
 
 <br/>
 
+
+# **GOTK PHP Server**
+
+The Kitchen Guard system also relies on a PHP-based server for database interactions. You can find the source code and setup instructions for the PHP server in the [GOTKPHPServer Repository](https://github.com/Losmobilos3/GOTKPHPServer).
+
+<br/>
 
 # **Support**
 
